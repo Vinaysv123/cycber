@@ -1,5 +1,4 @@
-import { Response } from "express";
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import bcrypt from "bcrypt";
 import { generateToken, verifyToken } from "../middleware/auth";
 import { runQuery, getQuery } from "../db/utils";
@@ -13,11 +12,11 @@ interface Admin {
   role: string;
 }
 
-export async function loginAdmin(
-  db: sqlite3.Database,
+export function loginAdmin(
+  db: Database.Database,
   email: string,
   password: string
-): Promise<{ token: string; admin: Admin }> {
+): { token: string; admin: Admin } {
   if (!validateEmail(email)) {
     throw new AppError(400, "Invalid email format");
   }
@@ -26,7 +25,7 @@ export async function loginAdmin(
     throw new AppError(400, "Invalid password");
   }
 
-  const admin = await getQuery<any>(
+  const admin = getQuery<any>(
     db,
     "SELECT * FROM admins WHERE email = ?",
     [email]
@@ -36,7 +35,7 @@ export async function loginAdmin(
     throw new AppError(401, "Invalid email or password");
   }
 
-  const passwordMatch = await bcrypt.compare(password, admin.password_hash);
+  const passwordMatch = bcrypt.compareSync(password, admin.password_hash);
 
   if (!passwordMatch) {
     throw new AppError(401, "Invalid email or password");
@@ -55,13 +54,13 @@ export async function loginAdmin(
   };
 }
 
-export async function createAdminUser(
-  db: sqlite3.Database,
+export function createAdminUser(
+  db: Database.Database,
   email: string,
   password: string,
   name: string,
   role: "admin" | "counselor" = "admin"
-): Promise<Admin> {
+): Admin {
   if (!validateEmail(email)) {
     throw new AppError(400, "Invalid email format");
   }
@@ -74,7 +73,7 @@ export async function createAdminUser(
     throw new AppError(400, "Name is required");
   }
 
-  const existingAdmin = await getQuery<any>(
+  const existingAdmin = getQuery<any>(
     db,
     "SELECT id FROM admins WHERE email = ?",
     [email]
@@ -84,16 +83,16 @@ export async function createAdminUser(
     throw new AppError(400, "Email already in use");
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
-  await runQuery(
+  runQuery(
     db,
-    `INSERT INTO admins (email, password_hash, name, role) 
+    `INSERT INTO admins (email, password_hash, name, role)
      VALUES (?, ?, ?, ?)`,
     [email, hashedPassword, name, role]
   );
 
-  const newAdmin = await getQuery<Admin>(
+  const newAdmin = getQuery<Admin>(
     db,
     "SELECT id, email, name, role FROM admins WHERE email = ?",
     [email]
@@ -106,11 +105,11 @@ export async function createAdminUser(
   return newAdmin;
 }
 
-export async function verifyAdminToken(token: string): Promise<{
+export function verifyAdminToken(token: string): {
   id: number;
   email: string;
   role: string;
-}> {
+} {
   try {
     return verifyToken(token);
   } catch (error) {
