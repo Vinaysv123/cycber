@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { generateToken, verifyToken } from "../middleware/auth";
 import { runQuery, getQuery } from "../db/utils";
 import { AppError } from "../middleware/errorHandler";
