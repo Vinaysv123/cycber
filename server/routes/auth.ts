@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import Database from "better-sqlite3";
+import { Database } from "../db/database";
 import { loginAdmin, createAdminUser, verifyAdminToken } from "../controllers/authController";
 import { AppError } from "../middleware/errorHandler";
 

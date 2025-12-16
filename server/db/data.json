@@ -1,0 +1,12 @@
+{
+  "admins": [],
+  "reports": [],
+  "report_updates": [],
+  "attachments": [],
+  "_nextId": {
+    "admins": 1,
+    "reports": 1,
+    "report_updates": 1,
+    "attachments": 1
+  }
+}
