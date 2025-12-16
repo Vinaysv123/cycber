@@ -1,24 +1,19 @@
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import path from "path";
 
 const DB_PATH = path.join(process.cwd(), "server/db/database.sqlite");
 
-export function initDatabase(): sqlite3.Database {
-  const db = new sqlite3.Database(DB_PATH, (err) => {
-    if (err) {
-      console.error("Error opening database:", err);
-      process.exit(1);
-    }
+export function initDatabase(): Database.Database {
+  try {
+    const db = new Database(DB_PATH);
     console.log("Connected to SQLite database");
-  });
 
-  // Enable foreign keys
-  db.run("PRAGMA foreign_keys = ON");
+    // Enable foreign keys
+    db.pragma("foreign_keys = ON");
 
-  // Create tables
-  db.serialize(() => {
+    // Create tables
     // Admins table
-    db.run(`
+    db.exec(`
       CREATE TABLE IF NOT EXISTS admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT UNIQUE NOT NULL,
@@ -31,7 +26,7 @@ export function initDatabase(): sqlite3.Database {
     `);
 
     // Reports table
-    db.run(`
+    db.exec(`
       CREATE TABLE IF NOT EXISTS reports (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         tracking_id TEXT UNIQUE NOT NULL,
@@ -46,7 +41,7 @@ export function initDatabase(): sqlite3.Database {
     `);
 
     // Report updates (status changes and admin notes)
-    db.run(`
+    db.exec(`
       CREATE TABLE IF NOT EXISTS report_updates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         report_id INTEGER NOT NULL,
@@ -60,7 +55,7 @@ export function initDatabase(): sqlite3.Database {
     `);
 
     // Attachments table
-    db.run(`
+    db.exec(`
       CREATE TABLE IF NOT EXISTS attachments (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         report_id INTEGER NOT NULL,
@@ -73,31 +68,36 @@ export function initDatabase(): sqlite3.Database {
     `);
 
     // Create indexes for better query performance
-    db.run(
+    db.exec(
       "CREATE INDEX IF NOT EXISTS idx_reports_tracking_id ON reports(tracking_id)"
     );
-    db.run(
+    db.exec(
       "CREATE INDEX IF NOT EXISTS idx_reports_status ON reports(status)"
     );
-    db.run(
+    db.exec(
       "CREATE INDEX IF NOT EXISTS idx_reports_created_at ON reports(created_at)"
     );
-    db.run(
+    db.exec(
       "CREATE INDEX IF NOT EXISTS idx_reports_severity ON reports(severity)"
     );
-    db.run(
+    db.exec(
       "CREATE INDEX IF NOT EXISTS idx_report_updates_report_id ON report_updates(report_id)"
     );
-  });
 
-  return db;
+    return db;
+  } catch (error) {
+    console.error("Error initializing database:", error);
+    process.exit(1);
+  }
 }
 
-export function getDatabase(): sqlite3.Database {
-  return new sqlite3.Database(DB_PATH, (err) => {
-    if (err) {
-      console.error("Error opening database:", err);
-      process.exit(1);
-    }
-  });
+export function getDatabase(): Database.Database {
+  try {
+    const db = new Database(DB_PATH);
+    db.pragma("foreign_keys = ON");
+    return db;
+  } catch (error) {
+    console.error("Error opening database:", error);
+    process.exit(1);
+  }
 }
