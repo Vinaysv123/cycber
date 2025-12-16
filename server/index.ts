@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import Database from "better-sqlite3";
 import { initDatabase } from "./db/init";
 import { createAuthRoutes } from "./routes/auth";
 import { createReportsRoutes } from "./routes/reports";
