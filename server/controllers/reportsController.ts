@@ -1,5 +1,4 @@
-import { Response } from "express";
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import { runQuery, getQuery, allQuery } from "../db/utils";
 import { AppError } from "../middleware/errorHandler";
 import crypto from "crypto";
@@ -20,24 +19,24 @@ function generateTrackingId(): string {
   return "CG" + crypto.randomBytes(8).toString("hex").toUpperCase();
 }
 
-export async function submitReport(
-  db: sqlite3.Database,
+export function submitReport(
+  db: Database.Database,
   category: string,
   severity: string,
   description: string,
   reporter_email?: string
-): Promise<Report> {
+): Report {
   const tracking_id = generateTrackingId();
   const now = new Date().toISOString();
 
-  await runQuery(
+  runQuery(
     db,
     `INSERT INTO reports (tracking_id, category, severity, description, reporter_email, status, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, 'pending', ?, ?)`,
     [tracking_id, category, severity, description, reporter_email || null, now, now]
   );
 
-  const report = await getQuery<Report>(
+  const report = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE tracking_id = ?",
     [tracking_id]
@@ -50,11 +49,11 @@ export async function submitReport(
   return report;
 }
 
-export async function getReportByTrackingId(
-  db: sqlite3.Database,
+export function getReportByTrackingId(
+  db: Database.Database,
   tracking_id: string
-): Promise<Report | null> {
-  const report = await getQuery<Report>(
+): Report | null {
+  const report = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE tracking_id = ?",
     [tracking_id]
@@ -63,8 +62,8 @@ export async function getReportByTrackingId(
   return report || null;
 }
 
-export async function getAllReports(
-  db: sqlite3.Database,
+export function getAllReports(
+  db: Database.Database,
   filters?: {
     status?: string;
     severity?: string;
@@ -72,7 +71,7 @@ export async function getAllReports(
     limit?: number;
     offset?: number;
   }
-): Promise<{ reports: Report[]; total: number }> {
+): { reports: Report[]; total: number } {
   let query = "SELECT * FROM reports WHERE 1=1";
   const params: any[] = [];
 
@@ -99,7 +98,7 @@ export async function getAllReports(
   query += " LIMIT ? OFFSET ?";
   params.push(limit, offset);
 
-  const reports = await allQuery<Report>(db, query, params);
+  const reports = allQuery<Report>(db, query, params);
 
   // Get total count
   let countQuery = "SELECT COUNT(*) as count FROM reports WHERE 1=1";
@@ -120,7 +119,7 @@ export async function getAllReports(
     countParams.push(filters.category);
   }
 
-  const countResult = await getQuery<{ count: number }>(
+  const countResult = getQuery<{ count: number }>(
     db,
     countQuery,
     countParams
@@ -132,13 +131,13 @@ export async function getAllReports(
   };
 }
 
-export async function updateReportStatus(
-  db: sqlite3.Database,
+export function updateReportStatus(
+  db: Database.Database,
   reportId: number,
   newStatus: string,
   adminId: number,
   notes?: string
-): Promise<Report> {
+): Report {
   const validStatuses = ["pending", "in_review", "resolved"];
 
   if (!validStatuses.includes(newStatus)) {
@@ -147,21 +146,21 @@ export async function updateReportStatus(
 
   const now = new Date().toISOString();
 
-  await runQuery(
+  runQuery(
     db,
     "UPDATE reports SET status = ?, updated_at = ? WHERE id = ?",
     [newStatus, now, reportId]
   );
 
   // Create a report update record
-  await runQuery(
+  runQuery(
     db,
     `INSERT INTO report_updates (report_id, admin_id, status, notes, created_at)
      VALUES (?, ?, ?, ?, ?)`,
     [reportId, adminId, newStatus, notes || null, now]
   );
 
-  const updatedReport = await getQuery<Report>(
+  const updatedReport = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE id = ?",
     [reportId]
@@ -174,37 +173,37 @@ export async function updateReportStatus(
   return updatedReport;
 }
 
-export async function getReportAnalytics(
-  db: sqlite3.Database
-): Promise<{
+export function getReportAnalytics(
+  db: Database.Database
+): {
   totalReports: number;
   severityDistribution: { severity: string; count: number }[];
   statusDistribution: { status: string; count: number }[];
   categoryDistribution: { category: string; count: number }[];
-}> {
-  const totalResult = await getQuery<{ count: number }>(
+} {
+  const totalResult = getQuery<{ count: number }>(
     db,
     "SELECT COUNT(*) as count FROM reports"
   );
 
-  const severityDist = await allQuery<{ severity: string; count: number }>(
+  const severityDist = allQuery<{ severity: string; count: number }>(
     db,
-    `SELECT severity, COUNT(*) as count FROM reports 
-     GROUP BY severity 
+    `SELECT severity, COUNT(*) as count FROM reports
+     GROUP BY severity
      ORDER BY count DESC`
   );
 
-  const statusDist = await allQuery<{ status: string; count: number }>(
+  const statusDist = allQuery<{ status: string; count: number }>(
     db,
-    `SELECT status, COUNT(*) as count FROM reports 
-     GROUP BY status 
+    `SELECT status, COUNT(*) as count FROM reports
+     GROUP BY status
      ORDER BY count DESC`
   );
 
-  const categoryDist = await allQuery<{ category: string; count: number }>(
+  const categoryDist = allQuery<{ category: string; count: number }>(
     db,
-    `SELECT category, COUNT(*) as count FROM reports 
-     GROUP BY category 
+    `SELECT category, COUNT(*) as count FROM reports
+     GROUP BY category
      ORDER BY count DESC`
   );
 
