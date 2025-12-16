@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import { Database } from "../db/database";
 import bcrypt from "bcryptjs";
 import { generateToken, verifyToken } from "../middleware/auth";
 import { runQuery, getQuery } from "../db/utils";
