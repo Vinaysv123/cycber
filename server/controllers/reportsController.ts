@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import { Database } from "../db/database";
 import { runQuery, getQuery, allQuery } from "../db/utils";
 import { AppError } from "../middleware/errorHandler";
 import crypto from "crypto";
