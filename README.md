@@ -86,9 +86,10 @@ Students often hesitate to report bullying due to:
 ### Backend
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
-- **SQLite 3** - Relational database
+- **JSON-based Database** - Development (file-persisted)
+- **SQLite 3** - Production (optional upgrade)
 - **JWT** - Token-based authentication
-- **bcrypt** - Password hashing
+- **bcryptjs** - Password hashing (pure JavaScript)
 - **TypeScript** - Type safety
 
 ### DevOps & Deployment
