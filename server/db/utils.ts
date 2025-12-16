@@ -1,40 +1,28 @@
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 
 export function runQuery(
-  db: sqlite3.Database,
+  db: Database.Database,
   sql: string,
   params: any[] = []
-): Promise<void> {
-  return new Promise((resolve, reject) => {
-    db.run(sql, params, function (err) {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
+): void {
+  const stmt = db.prepare(sql);
+  stmt.run(...params);
 }
 
 export function getQuery<T>(
-  db: sqlite3.Database,
+  db: Database.Database,
   sql: string,
   params: any[] = []
-): Promise<T | undefined> {
-  return new Promise((resolve, reject) => {
-    db.get(sql, params, (err, row) => {
-      if (err) reject(err);
-      else resolve(row as T | undefined);
-    });
-  });
+): T | undefined {
+  const stmt = db.prepare(sql);
+  return stmt.get(...params) as T | undefined;
 }
 
 export function allQuery<T>(
-  db: sqlite3.Database,
+  db: Database.Database,
   sql: string,
   params: any[] = []
-): Promise<T[]> {
-  return new Promise((resolve, reject) => {
-    db.all(sql, params, (err, rows) => {
-      if (err) reject(err);
-      else resolve((rows || []) as T[]);
-    });
-  });
+): T[] {
+  const stmt = db.prepare(sql);
+  return stmt.all(...params) as T[];
 }
