@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import {
   submitReport,
   getReportByTrackingId,
@@ -10,11 +10,11 @@ import {
 import { authenticateToken, requireRole, AuthRequest } from "../middleware/auth";
 import { AppError } from "../middleware/errorHandler";
 
-export function createReportsRoutes(db: sqlite3.Database): Router {
+export function createReportsRoutes(db: Database.Database): Router {
   const router = Router();
 
   // Submit anonymous report (no auth required)
-  router.post("/submit", async (req: Request, res: Response) => {
+  router.post("/submit", (req: Request, res: Response) => {
     try {
       const { category, severity, description, reporter_email } = req.body;
 
@@ -37,7 +37,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
         throw new AppError(400, "Description is too long");
       }
 
-      const report = await submitReport(
+      const report = submitReport(
         db,
         category,
         severity,
@@ -56,7 +56,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
   });
 
   // Check report status by tracking ID (no auth required)
-  router.get("/status/:tracking_id", async (req: Request, res: Response) => {
+  router.get("/status/:tracking_id", (req: Request, res: Response) => {
     try {
       const { tracking_id } = req.params;
 
@@ -64,7 +64,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
         throw new AppError(400, "Tracking ID is required");
       }
 
-      const report = await getReportByTrackingId(db, tracking_id);
+      const report = getReportByTrackingId(db, tracking_id);
 
       if (!report) {
         throw new AppError(404, "Report not found");
@@ -87,7 +87,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
       authenticateToken(req, res, next),
     (req: AuthRequest, res: Response, next) =>
       requireRole(["admin", "counselor"])(req, res, next),
-    async (req: AuthRequest, res: Response) => {
+    (req: AuthRequest, res: Response) => {
       try {
         const { status, severity, category, limit, offset } = req.query;
 
@@ -98,7 +98,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
         if (limit) filters.limit = parseInt(limit as string);
         if (offset) filters.offset = parseInt(offset as string);
 
-        const result = await getAllReports(db, filters);
+        const result = getAllReports(db, filters);
         res.json(result);
       } catch (error) {
         if (error instanceof AppError) {
@@ -117,7 +117,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
       authenticateToken(req, res, next),
     (req: AuthRequest, res: Response, next) =>
       requireRole(["admin"])(req, res, next),
-    async (req: AuthRequest, res: Response) => {
+    (req: AuthRequest, res: Response) => {
       try {
         const { id } = req.params;
         const { status, notes } = req.body;
@@ -130,7 +130,7 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
           throw new AppError(400, "Status is required");
         }
 
-        const report = await updateReportStatus(
+        const report = updateReportStatus(
           db,
           parseInt(id),
           status,
@@ -156,9 +156,9 @@ export function createReportsRoutes(db: sqlite3.Database): Router {
       authenticateToken(req, res, next),
     (req: AuthRequest, res: Response, next) =>
       requireRole(["admin"])(req, res, next),
-    async (req: AuthRequest, res: Response) => {
+    (req: AuthRequest, res: Response) => {
       try {
-        const analytics = await getReportAnalytics(db);
+        const analytics = getReportAnalytics(db);
         res.json(analytics);
       } catch (error) {
         res.status(500).json({ error: "Internal server error" });
