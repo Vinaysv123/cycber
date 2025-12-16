@@ -1,12 +1,12 @@
 import { Router, Request, Response } from "express";
-import sqlite3 from "sqlite3";
+import Database from "better-sqlite3";
 import { loginAdmin, createAdminUser, verifyAdminToken } from "../controllers/authController";
 import { AppError } from "../middleware/errorHandler";
 
-export function createAuthRoutes(db: sqlite3.Database): Router {
+export function createAuthRoutes(db: Database.Database): Router {
   const router = Router();
 
-  router.post("/login", async (req: Request, res: Response) => {
+  router.post("/login", (req: Request, res: Response) => {
     try {
       const { email, password } = req.body;
 
@@ -14,7 +14,7 @@ export function createAuthRoutes(db: sqlite3.Database): Router {
         throw new AppError(400, "Email and password are required");
       }
 
-      const result = await loginAdmin(db, email, password);
+      const result = loginAdmin(db, email, password);
       res.json(result);
     } catch (error) {
       if (error instanceof AppError) {
@@ -25,7 +25,7 @@ export function createAuthRoutes(db: sqlite3.Database): Router {
     }
   });
 
-  router.post("/verify-token", async (req: Request, res: Response) => {
+  router.post("/verify-token", (req: Request, res: Response) => {
     try {
       const { token } = req.body;
 
@@ -33,7 +33,7 @@ export function createAuthRoutes(db: sqlite3.Database): Router {
         throw new AppError(400, "Token is required");
       }
 
-      const admin = await verifyAdminToken(token);
+      const admin = verifyAdminToken(token);
       res.json({ valid: true, admin });
     } catch (error) {
       if (error instanceof AppError) {
