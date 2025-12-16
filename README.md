@@ -24,12 +24,14 @@
 ## 📋 Problem Statement
 
 Students often hesitate to report bullying due to:
+
 - **Fear of exposure and retaliation**
 - **Distrust of traditional reporting channels**
 - **Lack of anonymity in institutional systems**
 - **Uncertainty about follow-up actions**
 
 **CyberGuardian** directly addresses these concerns by:
+
 1. Guaranteeing complete anonymity
 2. Implementing transparent status tracking
 3. Providing secure, encrypted data handling
@@ -40,18 +42,21 @@ Students often hesitate to report bullying due to:
 ## ✨ Key Features
 
 ### 🔐 Anonymous Reporting
+
 - **Zero Personal Data**: No email, phone, or identification required
 - **Unique Tracking ID**: Generated on submission for status monitoring
 - **Guided Form Interface**: Simple categorization and severity assessment
 - **Optional Evidence Upload**: Support for file attachments (future enhancement)
 
 ### 📊 Report Management
+
 - **Multiple Categories**: Bullying, Harassment, Cyberbullying, Other
 - **Severity Levels**: Low, Medium, High
 - **Status Tracking**: Pending → In Review → Resolved
 - **Audit Trail**: Complete history of status changes and admin notes
 
 ### 👥 Admin Dashboard
+
 - **Secure Login**: JWT-based authentication
 - **Report Filtering**: By status, severity, category, and date
 - **Batch Operations**: Manage multiple reports efficiently
@@ -59,12 +64,14 @@ Students often hesitate to report bullying due to:
 - **Role-Based Access**: Admin and Counselor roles
 
 ### 🎓 User Experience
+
 - **Mobile-Responsive Design**: Works seamlessly on all devices
 - **Accessibility**: WCAG 2.1 AA compliant
 - **Clear Navigation**: Intuitive user journeys
 - **Real-time Feedback**: Instant confirmation of report submission
 
 ### 🛡️ Security & Privacy
+
 - **No IP Tracking**: No collection of user location data
 - **Encrypted Storage**: SQLite with secure hashing
 - **HTTPS-Ready**: Secure headers and CORS configuration
@@ -76,6 +83,7 @@ Students often hesitate to report bullying due to:
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - **React 18** - UI framework with hooks
 - **Vite** - Fast build tool
 - **Tailwind CSS 3** - Utility-first styling
@@ -84,6 +92,7 @@ Students often hesitate to report bullying due to:
 - **TypeScript** - Type safety
 
 ### Backend
+
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **JSON-based Database** - Development (file-persisted)
@@ -93,6 +102,7 @@ Students often hesitate to report bullying due to:
 - **TypeScript** - Type safety
 
 ### DevOps & Deployment
+
 - **Vite** - Development server with hot reload
 - **Docker** - Containerization (optional)
 - **Git** - Version control
@@ -105,6 +115,7 @@ Students often hesitate to report bullying due to:
 ### Tables
 
 #### `admins`
+
 ```sql
 CREATE TABLE admins (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -118,6 +129,7 @@ CREATE TABLE admins (
 ```
 
 #### `reports`
+
 ```sql
 CREATE TABLE reports (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -133,6 +145,7 @@ CREATE TABLE reports (
 ```
 
 #### `report_updates`
+
 ```sql
 CREATE TABLE report_updates (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -147,6 +160,7 @@ CREATE TABLE report_updates (
 ```
 
 #### `attachments`
+
 ```sql
 CREATE TABLE attachments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -160,6 +174,7 @@ CREATE TABLE attachments (
 ```
 
 ### Indexes
+
 - `idx_reports_tracking_id` - Fast lookup by tracking ID
 - `idx_reports_status` - Filter by status
 - `idx_reports_created_at` - Sort by date
@@ -171,6 +186,7 @@ CREATE TABLE attachments (
 ## 🔌 API Endpoints
 
 ### Authentication
+
 ```
 POST /api/auth/login
   Body: { email, password }
@@ -182,6 +198,7 @@ POST /api/auth/verify-token
 ```
 
 ### Reports (Anonymous)
+
 ```
 POST /api/reports/submit
   Body: { category, severity, description, reporter_email? }
@@ -192,6 +209,7 @@ GET /api/reports/status/:tracking_id
 ```
 
 ### Reports (Admin Only)
+
 ```
 GET /api/reports
   Query: ?status=pending&severity=high&limit=50&offset=0
@@ -210,6 +228,7 @@ GET /api/reports/analytics/summary
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or pnpm
 - SQLite 3
@@ -217,12 +236,14 @@ GET /api/reports/analytics/summary
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd cyberguardian
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -230,9 +251,11 @@ GET /api/reports/analytics/summary
    ```
 
 3. **Configure environment**
+
    ```bash
    cp .env.example .env
    ```
+
    Edit `.env` and set:
    - `JWT_SECRET` - Generate a strong random string
    - `ADMIN_EMAIL` and `ADMIN_PASSWORD` - Initial admin credentials
@@ -252,7 +275,7 @@ The database is automatically initialized on first run. To create an initial adm
 sqlite3 server/db/database.sqlite
 
 # Insert admin user (password will be bcrypt hashed in app)
-INSERT INTO admins (email, password_hash, name, role) 
+INSERT INTO admins (email, password_hash, name, role)
 VALUES ('admin@cyberguardian.edu', 'hashed_password_here', 'Admin User', 'admin');
 ```
 
@@ -262,18 +285,19 @@ Better approach: Use the API to create an admin through the setup endpoint (conf
 
 ## 📱 Pages & Routes
 
-| Route | Purpose | Auth Required |
-|-------|---------|-----------------|
-| `/` | Homepage with features and info | No |
-| `/report` | Anonymous reporting form | No |
-| `/status` | Check report status | No |
-| `/admin` | Admin dashboard (placeholder) | Yes |
+| Route     | Purpose                         | Auth Required |
+| --------- | ------------------------------- | ------------- |
+| `/`       | Homepage with features and info | No            |
+| `/report` | Anonymous reporting form        | No            |
+| `/status` | Check report status             | No            |
+| `/admin`  | Admin dashboard (placeholder)   | Yes           |
 
 ---
 
 ## 🔐 Security Features
 
 ### Data Protection
+
 - ✅ Passwords hashed with bcrypt (10 rounds)
 - ✅ JWT tokens with 24-hour expiration
 - ✅ Input sanitization on all fields
@@ -281,12 +305,14 @@ Better approach: Use the API to create an admin through the setup endpoint (conf
 - ✅ XSS protection via React escaping
 
 ### HTTP Security
+
 - ✅ Secure headers (X-Content-Type-Options, X-Frame-Options, etc.)
 - ✅ CORS properly configured
 - ✅ HTTPS-ready (deployed on HTTPS servers)
 - ✅ No sensitive data in logs
 
 ### Privacy
+
 - ✅ No IP address collection
 - ✅ No cookies for anonymous users
 - ✅ No third-party tracking
@@ -297,6 +323,7 @@ Better approach: Use the API to create an admin through the setup endpoint (conf
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 npm run test
 # or
@@ -304,6 +331,7 @@ pnpm test
 ```
 
 ### Test Coverage
+
 - Unit tests for API endpoints
 - Integration tests for database operations
 - E2E tests for critical user flows
@@ -313,6 +341,7 @@ pnpm test
 ## 📊 Deployment
 
 ### Build for Production
+
 ```bash
 npm run build
 # or
@@ -320,10 +349,12 @@ pnpm build
 ```
 
 Output:
+
 - Frontend: `dist/spa/` (static assets)
 - Backend: `dist/server/` (Node.js server)
 
 ### Deploy to Netlify
+
 ```bash
 # Push to GitHub
 git push origin main
@@ -333,6 +364,7 @@ git push origin main
 ```
 
 ### Deploy to Railway
+
 ```bash
 # Install Railway CLI
 npm i -g @railway/cli
@@ -346,6 +378,7 @@ railway up
 ```
 
 ### Deploy to Render
+
 ```bash
 # Connect GitHub repository to Render
 # Auto-deploys on push to main
@@ -353,6 +386,7 @@ railway up
 ```
 
 ### Environment Variables (Production)
+
 ```
 NODE_ENV=production
 JWT_SECRET=<strong-random-string-min-32-chars>
@@ -405,6 +439,7 @@ We welcome contributions! Please follow these guidelines:
 5. Open a Pull Request
 
 ### Code Standards
+
 - TypeScript for all new code
 - ESLint for linting
 - Prettier for formatting
@@ -421,17 +456,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Support & Resources
 
 ### Mental Health Resources
+
 - **National Crisis Hotline**: 988 (call or text, 24/7)
 - **Crisis Text Line**: Text HOME to 741741
 - **SAMHSA National Helpline**: 1-800-662-4357
 
 ### Technical Support
+
 For issues, questions, or suggestions:
+
 - Open an issue on GitHub
 - Contact the development team
 - Check documentation at `/docs`
 
 ### Code of Conduct
+
 We are committed to creating a safe, inclusive community. Please review our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
@@ -456,4 +495,4 @@ We are committed to creating a safe, inclusive community. Please review our [Cod
 
 **CyberGuardian** - Making educational institutions safer, one report at a time.
 
-*Version 1.0.0 - Production Ready*
+_Version 1.0.0 - Production Ready_

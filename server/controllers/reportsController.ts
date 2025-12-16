@@ -24,7 +24,7 @@ export function submitReport(
   category: string,
   severity: string,
   description: string,
-  reporter_email?: string
+  reporter_email?: string,
 ): Report {
   const tracking_id = generateTrackingId();
   const now = new Date().toISOString();
@@ -33,13 +33,21 @@ export function submitReport(
     db,
     `INSERT INTO reports (tracking_id, category, severity, description, reporter_email, status, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, 'pending', ?, ?)`,
-    [tracking_id, category, severity, description, reporter_email || null, now, now]
+    [
+      tracking_id,
+      category,
+      severity,
+      description,
+      reporter_email || null,
+      now,
+      now,
+    ],
   );
 
   const report = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE tracking_id = ?",
-    [tracking_id]
+    [tracking_id],
   );
 
   if (!report) {
@@ -51,12 +59,12 @@ export function submitReport(
 
 export function getReportByTrackingId(
   db: Database.Database,
-  tracking_id: string
+  tracking_id: string,
 ): Report | null {
   const report = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE tracking_id = ?",
-    [tracking_id]
+    [tracking_id],
   );
 
   return report || null;
@@ -70,7 +78,7 @@ export function getAllReports(
     category?: string;
     limit?: number;
     offset?: number;
-  }
+  },
 ): { reports: Report[]; total: number } {
   let query = "SELECT * FROM reports WHERE 1=1";
   const params: any[] = [];
@@ -119,11 +127,7 @@ export function getAllReports(
     countParams.push(filters.category);
   }
 
-  const countResult = getQuery<{ count: number }>(
-    db,
-    countQuery,
-    countParams
-  );
+  const countResult = getQuery<{ count: number }>(db, countQuery, countParams);
 
   return {
     reports,
@@ -136,7 +140,7 @@ export function updateReportStatus(
   reportId: number,
   newStatus: string,
   adminId: number,
-  notes?: string
+  notes?: string,
 ): Report {
   const validStatuses = ["pending", "in_review", "resolved"];
 
@@ -146,24 +150,24 @@ export function updateReportStatus(
 
   const now = new Date().toISOString();
 
-  runQuery(
-    db,
-    "UPDATE reports SET status = ?, updated_at = ? WHERE id = ?",
-    [newStatus, now, reportId]
-  );
+  runQuery(db, "UPDATE reports SET status = ?, updated_at = ? WHERE id = ?", [
+    newStatus,
+    now,
+    reportId,
+  ]);
 
   // Create a report update record
   runQuery(
     db,
     `INSERT INTO report_updates (report_id, admin_id, status, notes, created_at)
      VALUES (?, ?, ?, ?, ?)`,
-    [reportId, adminId, newStatus, notes || null, now]
+    [reportId, adminId, newStatus, notes || null, now],
   );
 
   const updatedReport = getQuery<Report>(
     db,
     "SELECT * FROM reports WHERE id = ?",
-    [reportId]
+    [reportId],
   );
 
   if (!updatedReport) {
@@ -173,9 +177,7 @@ export function updateReportStatus(
   return updatedReport;
 }
 
-export function getReportAnalytics(
-  db: Database.Database
-): {
+export function getReportAnalytics(db: Database.Database): {
   totalReports: number;
   severityDistribution: { severity: string; count: number }[];
   statusDistribution: { status: string; count: number }[];
@@ -183,28 +185,28 @@ export function getReportAnalytics(
 } {
   const totalResult = getQuery<{ count: number }>(
     db,
-    "SELECT COUNT(*) as count FROM reports"
+    "SELECT COUNT(*) as count FROM reports",
   );
 
   const severityDist = allQuery<{ severity: string; count: number }>(
     db,
     `SELECT severity, COUNT(*) as count FROM reports
      GROUP BY severity
-     ORDER BY count DESC`
+     ORDER BY count DESC`,
   );
 
   const statusDist = allQuery<{ status: string; count: number }>(
     db,
     `SELECT status, COUNT(*) as count FROM reports
      GROUP BY status
-     ORDER BY count DESC`
+     ORDER BY count DESC`,
   );
 
   const categoryDist = allQuery<{ category: string; count: number }>(
     db,
     `SELECT category, COUNT(*) as count FROM reports
      GROUP BY category
-     ORDER BY count DESC`
+     ORDER BY count DESC`,
   );
 
   return {

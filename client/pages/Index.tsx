@@ -19,7 +19,9 @@ export default function Index() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">CyberGuardian</span>
+            <span className="text-2xl font-bold text-primary">
+              CyberGuardian
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/report">
@@ -41,7 +43,9 @@ export default function Index() {
               <span className="text-primary block mt-2">Safely.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl">
-              Anonymous reporting for bullying, harassment, and cyberbullying in educational institutions. Report with confidence. We protect your privacy.
+              Anonymous reporting for bullying, harassment, and cyberbullying in
+              educational institutions. Report with confidence. We protect your
+              privacy.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/report">
@@ -115,7 +119,8 @@ export default function Index() {
                 </h3>
               </div>
               <p className="text-muted-foreground pl-11">
-                Tell us about the bullying or harassment you've experienced or witnessed. Select the category that best fits your situation.
+                Tell us about the bullying or harassment you've experienced or
+                witnessed. Select the category that best fits your situation.
               </p>
               <div className="pl-11 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
@@ -144,7 +149,8 @@ export default function Index() {
                 </h3>
               </div>
               <p className="text-muted-foreground pl-11">
-                After submission, you'll receive a unique tracking ID. Keep it safe to check your report status anytime, without logging in.
+                After submission, you'll receive a unique tracking ID. Keep it
+                safe to check your report status anytime, without logging in.
               </p>
               <div className="pl-11 bg-muted/30 border border-muted rounded-lg p-4 font-mono text-sm text-primary">
                 CG7F4A9B2C5E1D8
@@ -162,7 +168,8 @@ export default function Index() {
                 </h3>
               </div>
               <p className="text-muted-foreground pl-11">
-                Our trained administrators and counselors will review your report thoroughly and take appropriate action.
+                Our trained administrators and counselors will review your
+                report thoroughly and take appropriate action.
               </p>
             </div>
 
@@ -177,7 +184,8 @@ export default function Index() {
                 </h3>
               </div>
               <p className="text-muted-foreground pl-11">
-                Access mental health resources and support from trained counselors in your institution.
+                Access mental health resources and support from trained
+                counselors in your institution.
               </p>
             </div>
           </div>
@@ -216,7 +224,8 @@ export default function Index() {
               <Heart className="w-8 h-8 text-secondary mb-4" />
               <h3 className="text-lg font-semibold mb-2">Crisis Support</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                24/7 crisis helplines and emergency support services available if you need immediate help.
+                24/7 crisis helplines and emergency support services available
+                if you need immediate help.
               </p>
               <p className="text-sm font-semibold text-primary">
                 National Crisis Hotline: 988
@@ -225,9 +234,12 @@ export default function Index() {
 
             <div className="p-6 border border-border rounded-xl hover:shadow-lg transition-shadow">
               <Users className="w-8 h-8 text-secondary mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Counseling Services</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Counseling Services
+              </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Connect with trained school counselors and mental health professionals in your institution.
+                Connect with trained school counselors and mental health
+                professionals in your institution.
               </p>
               <p className="text-sm font-semibold text-primary">
                 Contact your school's counseling office
@@ -244,7 +256,8 @@ export default function Index() {
             Ready to Report?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Your report is important. We take every submission seriously and are committed to creating a safer environment for everyone.
+            Your report is important. We take every submission seriously and are
+            committed to creating a safer environment for everyone.
           </p>
           <Link to="/report">
             <Button size="lg" className="gap-2">
@@ -269,15 +282,23 @@ export default function Index() {
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Quick Links</h4>
+              <h4 className="font-semibold mb-4 text-foreground">
+                Quick Links
+              </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <Link to="/report" className="hover:text-primary transition-colors">
+                  <Link
+                    to="/report"
+                    className="hover:text-primary transition-colors"
+                  >
                     Submit Report
                   </Link>
                 </li>
                 <li>
-                  <Link to="/status" className="hover:text-primary transition-colors">
+                  <Link
+                    to="/status"
+                    className="hover:text-primary transition-colors"
+                  >
                     Check Status
                   </Link>
                 </li>
@@ -291,9 +312,7 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t pt-8 text-center text-sm text-muted-foreground">
-            <p>
-              © 2024 CyberGuardian. All rights reserved. Privacy First.
-            </p>
+            <p>© 2024 CyberGuardian. All rights reserved. Privacy First.</p>
           </div>
         </div>
       </footer>

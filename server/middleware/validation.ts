@@ -2,10 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "./errorHandler";
 
 export function sanitizeInput(input: string): string {
-  return input
-    .trim()
-    .replace(/[<>]/g, "")
-    .substring(0, 10000);
+  return input.trim().replace(/[<>]/g, "").substring(0, 10000);
 }
 
 export function validateEmail(email: string): boolean {
@@ -17,7 +14,11 @@ export function validatePassword(password: string): boolean {
   return password.length >= 8 && password.length <= 255;
 }
 
-export function validateReportInput(req: Request, _res: Response, next: NextFunction): void {
+export function validateReportInput(
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+): void {
   const { category, severity, description, reporter_email } = req.body;
 
   const validCategories = ["bullying", "harassment", "cyberbullying", "other"];
@@ -39,10 +40,7 @@ export function validateReportInput(req: Request, _res: Response, next: NextFunc
     throw new AppError(400, "Description is too long");
   }
 
-  if (
-    reporter_email &&
-    !validateEmail(reporter_email)
-  ) {
+  if (reporter_email && !validateEmail(reporter_email)) {
     throw new AppError(400, "Invalid email format");
   }
 

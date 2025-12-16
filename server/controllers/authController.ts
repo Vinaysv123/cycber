@@ -15,7 +15,7 @@ interface Admin {
 export function loginAdmin(
   db: Database.Database,
   email: string,
-  password: string
+  password: string,
 ): { token: string; admin: Admin } {
   if (!validateEmail(email)) {
     throw new AppError(400, "Invalid email format");
@@ -25,11 +25,9 @@ export function loginAdmin(
     throw new AppError(400, "Invalid password");
   }
 
-  const admin = getQuery<any>(
-    db,
-    "SELECT * FROM admins WHERE email = ?",
-    [email]
-  );
+  const admin = getQuery<any>(db, "SELECT * FROM admins WHERE email = ?", [
+    email,
+  ]);
 
   if (!admin) {
     throw new AppError(401, "Invalid email or password");
@@ -59,7 +57,7 @@ export function createAdminUser(
   email: string,
   password: string,
   name: string,
-  role: "admin" | "counselor" = "admin"
+  role: "admin" | "counselor" = "admin",
 ): Admin {
   if (!validateEmail(email)) {
     throw new AppError(400, "Invalid email format");
@@ -76,7 +74,7 @@ export function createAdminUser(
   const existingAdmin = getQuery<any>(
     db,
     "SELECT id FROM admins WHERE email = ?",
-    [email]
+    [email],
   );
 
   if (existingAdmin) {
@@ -89,13 +87,13 @@ export function createAdminUser(
     db,
     `INSERT INTO admins (email, password_hash, name, role)
      VALUES (?, ?, ?, ?)`,
-    [email, hashedPassword, name, role]
+    [email, hashedPassword, name, role],
   );
 
   const newAdmin = getQuery<Admin>(
     db,
     "SELECT id, email, name, role FROM admins WHERE email = ?",
-    [email]
+    [email],
   );
 
   if (!newAdmin) {

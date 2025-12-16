@@ -19,9 +19,21 @@ export default function Report() {
   });
 
   const categories = [
-    { value: "bullying", label: "Bullying", description: "Physical or verbal abuse" },
-    { value: "harassment", label: "Harassment", description: "Unwanted behavior or targeting" },
-    { value: "cyberbullying", label: "Cyberbullying", description: "Online harassment or threats" },
+    {
+      value: "bullying",
+      label: "Bullying",
+      description: "Physical or verbal abuse",
+    },
+    {
+      value: "harassment",
+      label: "Harassment",
+      description: "Unwanted behavior or targeting",
+    },
+    {
+      value: "cyberbullying",
+      label: "Cyberbullying",
+      description: "Online harassment or threats",
+    },
     { value: "other", label: "Other", description: "Other incidents" },
   ];
 
@@ -31,7 +43,11 @@ export default function Report() {
     { value: "high", label: "High", description: "Severe incident" },
   ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -83,7 +99,9 @@ export default function Report() {
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">CyberGuardian</span>
+              <span className="text-2xl font-bold text-primary">
+                CyberGuardian
+              </span>
             </div>
             <Link to="/">
               <Button variant="outline" className="gap-2">
@@ -107,7 +125,8 @@ export default function Report() {
               </h1>
 
               <p className="text-lg text-muted-foreground mb-8">
-                Thank you for having the courage to report. Your voice matters and your safety is our priority.
+                Thank you for having the courage to report. Your voice matters
+                and your safety is our priority.
               </p>
 
               {/* Tracking ID Card */}
@@ -143,36 +162,59 @@ export default function Report() {
 
               {/* Next Steps */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8 text-left">
-                <h3 className="font-semibold text-foreground mb-3">What Happens Next</h3>
+                <h3 className="font-semibold text-foreground mb-3">
+                  What Happens Next
+                </h3>
                 <ol className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                    <span>Our team will review your report within 2-3 business days</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                      1
+                    </span>
+                    <span>
+                      Our team will review your report within 2-3 business days
+                    </span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                    <span>You can check your report status anytime using your Tracking ID</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                      2
+                    </span>
+                    <span>
+                      You can check your report status anytime using your
+                      Tracking ID
+                    </span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                    <span>Appropriate action will be taken based on our findings</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                      3
+                    </span>
+                    <span>
+                      Appropriate action will be taken based on our findings
+                    </span>
                   </li>
                 </ol>
               </div>
 
               {/* Support Resources */}
               <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
-                <h3 className="font-semibold text-foreground mb-3">Need Support?</h3>
+                <h3 className="font-semibold text-foreground mb-3">
+                  Need Support?
+                </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   We're here to help. Consider reaching out to:
                 </p>
                 <div className="space-y-2 text-sm">
                   <div>
-                    <p className="font-semibold text-foreground">School Counselor</p>
-                    <p className="text-muted-foreground">Contact your school's counseling office</p>
+                    <p className="font-semibold text-foreground">
+                      School Counselor
+                    </p>
+                    <p className="text-muted-foreground">
+                      Contact your school's counseling office
+                    </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Crisis Hotline</p>
+                    <p className="font-semibold text-foreground">
+                      Crisis Hotline
+                    </p>
                     <p className="text-primary font-mono">988 (24/7)</p>
                   </div>
                 </div>
@@ -186,9 +228,7 @@ export default function Report() {
                   </Button>
                 </Link>
                 <Link to="/">
-                  <Button className="w-full sm:w-auto">
-                    Back to Home
-                  </Button>
+                  <Button className="w-full sm:w-auto">Back to Home</Button>
                 </Link>
               </div>
             </div>
@@ -205,7 +245,9 @@ export default function Report() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">CyberGuardian</span>
+            <span className="text-2xl font-bold text-primary">
+              CyberGuardian
+            </span>
           </div>
           <Link to="/">
             <Button variant="outline" className="gap-2">
@@ -225,7 +267,8 @@ export default function Report() {
               Submit an Anonymous Report
             </h1>
             <p className="text-lg text-muted-foreground">
-              Your identity is completely protected. Help us create a safer community.
+              Your identity is completely protected. Help us create a safer
+              community.
             </p>
           </div>
 
@@ -235,7 +278,8 @@ export default function Report() {
               {/* Category */}
               <div>
                 <label className="block text-sm font-semibold text-foreground mb-3">
-                  What type of incident are you reporting? <span className="text-destructive">*</span>
+                  What type of incident are you reporting?{" "}
+                  <span className="text-destructive">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {categories.map((cat) => (
@@ -255,8 +299,12 @@ export default function Report() {
                         className="mt-1 w-4 h-4 accent-primary"
                       />
                       <div className="ml-3">
-                        <p className="font-semibold text-foreground">{cat.label}</p>
-                        <p className="text-sm text-muted-foreground">{cat.description}</p>
+                        <p className="font-semibold text-foreground">
+                          {cat.label}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {cat.description}
+                        </p>
                       </div>
                     </label>
                   ))}
@@ -266,7 +314,8 @@ export default function Report() {
               {/* Severity */}
               <div>
                 <label className="block text-sm font-semibold text-foreground mb-3">
-                  How serious is this incident? <span className="text-destructive">*</span>
+                  How serious is this incident?{" "}
+                  <span className="text-destructive">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {severities.map((sev) => (
@@ -286,8 +335,12 @@ export default function Report() {
                         className="w-4 h-4 accent-primary"
                       />
                       <div className="ml-3">
-                        <p className="font-semibold text-foreground">{sev.label}</p>
-                        <p className="text-xs text-muted-foreground">{sev.description}</p>
+                        <p className="font-semibold text-foreground">
+                          {sev.label}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {sev.description}
+                        </p>
                       </div>
                     </label>
                   ))}
@@ -296,11 +349,16 @@ export default function Report() {
 
               {/* Description */}
               <div>
-                <label htmlFor="description" className="block text-sm font-semibold text-foreground mb-2">
-                  Tell us what happened <span className="text-destructive">*</span>
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-semibold text-foreground mb-2"
+                >
+                  Tell us what happened{" "}
+                  <span className="text-destructive">*</span>
                 </label>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Be as detailed as possible. Include who, what, when, and where.
+                  Be as detailed as possible. Include who, what, when, and
+                  where.
                 </p>
                 <textarea
                   id="description"
@@ -318,11 +376,15 @@ export default function Report() {
 
               {/* Optional Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-foreground mb-2"
+                >
                   Email (Optional)
                 </label>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Provide an email only if you want to receive updates about your report. Your email will be kept secure.
+                  Provide an email only if you want to receive updates about
+                  your report. Your email will be kept secure.
                 </p>
                 <input
                   id="email"
@@ -338,14 +400,19 @@ export default function Report() {
               {/* Privacy Notice */}
               <div className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
                 <p className="text-sm text-foreground">
-                  <span className="font-semibold">Privacy Promise:</span> Your report is completely anonymous. We do not track IP addresses, location, or any identifying information. Only authorized administrators can view your report.
+                  <span className="font-semibold">Privacy Promise:</span> Your
+                  report is completely anonymous. We do not track IP addresses,
+                  location, or any identifying information. Only authorized
+                  administrators can view your report.
                 </p>
               </div>
 
               {/* Error Message */}
               {error && (
                 <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-                  <p className="text-sm text-destructive font-semibold">{error}</p>
+                  <p className="text-sm text-destructive font-semibold">
+                    {error}
+                  </p>
                 </div>
               )}
 
@@ -373,18 +440,29 @@ export default function Report() {
 
           {/* Help Section */}
           <div className="mt-12 bg-card border border-border rounded-xl p-6 md:p-8">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Need Help?</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Need Help?
+            </h3>
             <p className="text-muted-foreground mb-6">
-              If you're not sure what to report or need guidance, here are some helpful resources:
+              If you're not sure what to report or need guidance, here are some
+              helpful resources:
             </p>
             <div className="space-y-3 text-sm">
               <div>
-                <p className="font-semibold text-foreground">Experiencing Crisis?</p>
-                <p className="text-muted-foreground">Call 988 (24/7 Crisis Helpline)</p>
+                <p className="font-semibold text-foreground">
+                  Experiencing Crisis?
+                </p>
+                <p className="text-muted-foreground">
+                  Call 988 (24/7 Crisis Helpline)
+                </p>
               </div>
               <div>
-                <p className="font-semibold text-foreground">Immediate Danger?</p>
-                <p className="text-muted-foreground">Call 911 or your local emergency services</p>
+                <p className="font-semibold text-foreground">
+                  Immediate Danger?
+                </p>
+                <p className="text-muted-foreground">
+                  Call 911 or your local emergency services
+                </p>
               </div>
             </div>
           </div>

@@ -10,7 +10,9 @@ export default function Admin() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">CyberGuardian</span>
+            <span className="text-2xl font-bold text-primary">
+              CyberGuardian
+            </span>
           </div>
           <Link to="/">
             <Button variant="outline" className="gap-2">
@@ -30,12 +32,15 @@ export default function Admin() {
               Admin Dashboard
             </h1>
             <p className="text-center text-muted-foreground mb-8">
-              This is a placeholder for the admin dashboard. In a production deployment, this would be a fully functional admin panel with:
+              This is a placeholder for the admin dashboard. In a production
+              deployment, this would be a fully functional admin panel with:
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="p-4 border border-border rounded-lg">
-                <h3 className="font-semibold text-foreground mb-2">Report Management</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Report Management
+                </h3>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• View all submitted reports</li>
                   <li>• Filter by status, severity, category</li>
@@ -45,7 +50,9 @@ export default function Admin() {
               </div>
 
               <div className="p-4 border border-border rounded-lg">
-                <h3 className="font-semibold text-foreground mb-2">Analytics</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Analytics
+                </h3>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Total reports dashboard</li>
                   <li>• Severity distribution charts</li>
@@ -55,7 +62,9 @@ export default function Admin() {
               </div>
 
               <div className="p-4 border border-border rounded-lg">
-                <h3 className="font-semibold text-foreground mb-2">User Management</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  User Management
+                </h3>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Admin accounts</li>
                   <li>• Counselor accounts</li>
@@ -76,9 +85,15 @@ export default function Admin() {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-              <h3 className="font-semibold text-foreground mb-2">To Complete This Section</h3>
+              <h3 className="font-semibold text-foreground mb-2">
+                To Complete This Section
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Continue prompting the assistant to build out the full admin authentication (login page), report management dashboard with filtering, analytics views, and user management features. These would be fully functional production components with real-time data from the SQLite backend.
+                Continue prompting the assistant to build out the full admin
+                authentication (login page), report management dashboard with
+                filtering, analytics views, and user management features. These
+                would be fully functional production components with real-time
+                data from the SQLite backend.
               </p>
             </div>
 

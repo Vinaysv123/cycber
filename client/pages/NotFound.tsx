@@ -21,7 +21,9 @@ const NotFound = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">CyberGuardian</span>
+            <span className="text-2xl font-bold text-primary">
+              CyberGuardian
+            </span>
           </div>
         </div>
       </nav>
@@ -29,7 +31,9 @@ const NotFound = () => {
       {/* 404 Content */}
       <div className="flex-1 flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <h1 className="text-6xl md:text-7xl font-bold text-primary mb-4">404</h1>
+          <h1 className="text-6xl md:text-7xl font-bold text-primary mb-4">
+            404
+          </h1>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Page Not Found
           </h2>

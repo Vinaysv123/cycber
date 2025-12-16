@@ -14,7 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-in-production";
 export function generateToken(
   adminId: number,
   email: string,
-  role: string
+  role: string,
 ): string {
   return jwt.sign({ id: adminId, email, role }, JWT_SECRET, {
     expiresIn: "24h",
@@ -36,7 +36,7 @@ export function verifyToken(token: string): {
 export function authenticateToken(
   req: AuthRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];

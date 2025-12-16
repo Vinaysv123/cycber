@@ -149,21 +149,11 @@ export class Database {
     const lowerSql = sql.toLowerCase();
 
     if (lowerSql.includes("from admins")) {
-      return this.filterTable(
-        this.data.admins,
-        sql,
-        params,
-        "admins"
-      ) as T[];
+      return this.filterTable(this.data.admins, sql, params, "admins") as T[];
     }
 
     if (lowerSql.includes("from reports")) {
-      return this.filterTable(
-        this.data.reports,
-        sql,
-        params,
-        "reports"
-      ) as T[];
+      return this.filterTable(this.data.reports, sql, params, "reports") as T[];
     }
 
     if (lowerSql.includes("from report_updates")) {
@@ -171,7 +161,7 @@ export class Database {
         this.data.report_updates,
         sql,
         params,
-        "report_updates"
+        "report_updates",
       ) as T[];
     }
 
@@ -234,7 +224,7 @@ export class Database {
     table: T[],
     sql: string,
     params: any[],
-    tableName: string
+    tableName: string,
   ): T[] {
     let results = [...table];
 
@@ -256,7 +246,10 @@ export class Database {
           results = results.filter((r) => r.id === params[0]);
         }
 
-        if (whereClause.includes("status = ?") && !whereClause.includes("severity")) {
+        if (
+          whereClause.includes("status = ?") &&
+          !whereClause.includes("severity")
+        ) {
           results = results.filter((r) => r.status === params[0]);
         } else if (whereClause.includes("status = ?")) {
           // Multiple conditions

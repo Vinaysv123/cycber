@@ -1,6 +1,10 @@
 import { Router, Request, Response } from "express";
 import { Database } from "../db/database";
-import { loginAdmin, createAdminUser, verifyAdminToken } from "../controllers/authController";
+import {
+  loginAdmin,
+  createAdminUser,
+  verifyAdminToken,
+} from "../controllers/authController";
 import { AppError } from "../middleware/errorHandler";
 
 export function createAuthRoutes(db: Database.Database): Router {

@@ -7,7 +7,11 @@ import {
   updateReportStatus,
   getReportAnalytics,
 } from "../controllers/reportsController";
-import { authenticateToken, requireRole, AuthRequest } from "../middleware/auth";
+import {
+  authenticateToken,
+  requireRole,
+  AuthRequest,
+} from "../middleware/auth";
 import { AppError } from "../middleware/errorHandler";
 
 export function createReportsRoutes(db: Database.Database): Router {
@@ -18,7 +22,12 @@ export function createReportsRoutes(db: Database.Database): Router {
     try {
       const { category, severity, description, reporter_email } = req.body;
 
-      const validCategories = ["bullying", "harassment", "cyberbullying", "other"];
+      const validCategories = [
+        "bullying",
+        "harassment",
+        "cyberbullying",
+        "other",
+      ];
       const validSeverities = ["low", "medium", "high"];
 
       if (!validCategories.includes(category)) {
@@ -42,7 +51,7 @@ export function createReportsRoutes(db: Database.Database): Router {
         category,
         severity,
         description,
-        reporter_email
+        reporter_email,
       );
 
       res.status(201).json(report);
@@ -107,7 +116,7 @@ export function createReportsRoutes(db: Database.Database): Router {
           res.status(500).json({ error: "Internal server error" });
         }
       }
-    }
+    },
   );
 
   // Update report status (admin only)
@@ -135,7 +144,7 @@ export function createReportsRoutes(db: Database.Database): Router {
           parseInt(id),
           status,
           req.admin!.id,
-          notes
+          notes,
         );
 
         res.json(report);
@@ -146,7 +155,7 @@ export function createReportsRoutes(db: Database.Database): Router {
           res.status(500).json({ error: "Internal server error" });
         }
       }
-    }
+    },
   );
 
   // Get analytics (admin only)
@@ -163,7 +172,7 @@ export function createReportsRoutes(db: Database.Database): Router {
       } catch (error) {
         res.status(500).json({ error: "Internal server error" });
       }
-    }
+    },
   );
 
   return router;
